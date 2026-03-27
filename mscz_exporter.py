@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def mscz2xml(filepath: Path):
+def mscz2musicxml(filepath: Path):
     "Converts musescore sheet to xml"
     musicxml_file = filepath.with_suffix(".musicxml")
     subprocess.run(
