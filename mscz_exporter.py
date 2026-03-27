@@ -8,25 +8,25 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def mscz2musicxml(filepath: Path):
+def mscz2musicxml(input_path: Path, output_path: Path | None):
     "Converts musescore sheet to xml"
-    musicxml_file = filepath.with_suffix(".musicxml")
+    output_path = output_path or input_path.with_suffix(".musicxml")
     subprocess.run(
-        [os.getenv("MUSESCORE_EXECUTABLE"), filepath, "-o", musicxml_file], check=True
+        [os.getenv("MUSESCORE_EXECUTABLE"), input_path, "-o", output_path], check=True
     )
-    return musicxml_file
+    return output_path
 
 
-def mscz2pdf(filepath: Path):
+def mscz2pdf(input_path: Path, output_path: Path | None):
     "Converts musescore sheet to pdf"
-    pdf_file = filepath.with_suffix(".pdf")
+    output_path = output_path or input_path.with_suffix(".pdf")
     subprocess.run(
-        [os.getenv("MUSESCORE_EXECUTABLE"), filepath, "-o", pdf_file],
+        [os.getenv("MUSESCORE_EXECUTABLE"), input_path, "-o", output_path],
         check=True,
     )
-    return pdf_file
+    return output_path
 
 
 if __name__ == "__main__":
-    mscz2xml(Path(sys.argv[1]))
-    mscz2pdf(Path(sys.argv[1]))
+    mscz2musicxml(Path(sys.argv[1]), None)
+    mscz2pdf(Path(sys.argv[1]), None)
