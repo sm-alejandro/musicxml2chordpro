@@ -4,7 +4,8 @@ import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
-from xml2pro import XML2Pro
+
+from musicxml2chordpro.xml2pro import XML2Pro
 
 load_dotenv()
 
@@ -44,4 +45,5 @@ if __name__ == "__main__":
     mscz2musicxml(Path(sys.argv[1]), None)
     mscz2pdf(Path(sys.argv[1]), None)
     pro: Path = xml2pro(Path(sys.argv[1]), None)
+    pro2pdf(pro, None)
     pro2pdf(pro, None)

@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 from abc import abstractmethod
 from pathlib import Path
 
-import maps
+from musicxml2chordpro import maps
 
 
 class XML2Pro:
