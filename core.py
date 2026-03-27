@@ -4,7 +4,6 @@ import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
-
 from xml2pro import XML2Pro
 
 load_dotenv()
@@ -28,7 +27,7 @@ def mscz2pdf(input_path: Path, output_path: Path | None):
     return output_path
 
 
-def xml2pro(input_path: Path, output_path: Path | None):
+def musicxml2pro(input_path: Path, output_path: Path | None):
     converter = XML2Pro()
     output_path = converter.convert_file(input_path, output_path)
     return output_path
