@@ -74,34 +74,33 @@ class XML2Pro:
         for index, m in enumerate(measures):
             self.process_measure(m, verse)
             repeat = m.find("barline/repeat")
-            if (repeat := m.find("barline/repeat")) is not None:
-                direction = repeat.get("direction")
-                if direction == "forward":
-                    self.in_repeat = index
-                if direction == "backward":
-                    any_found = False
-                    for verse_index in range(verse + 1, 10):
-                        found = False
-                        for i in range(self.in_repeat, index + 1):
-                            m_search = measures[i]
-                            if (
-                                len(
-                                    m_search.findall(
-                                        f'note/lyric[@number="{verse_index}"]'
-                                    )
-                                )
-                                != 0
-                            ):
-                                found = True
-                                break
-                        if found:
-                            any_found = True
-                            for i in range(self.in_repeat, index + 1):
-                                self.process_measure(measures[i], verse_index)
-                        else:
-                            if not any_found:
-                                self.result += "(bis)\n"
+            if (repeat := m.find("barline/repeat")) is None:
+                continue
+            direction = repeat.get("direction")
+            if direction == "forward":
+                self.in_repeat = index
+            if direction == "backward":
+                any_found = False
+                for verse_index in range(verse + 1, 10):
+                    found = False
+                    for i in range(self.in_repeat, index + 1):
+                        m_search = measures[i]
+                        if (
+                            len(
+                                m_search.findall(f'note/lyric[@number="{verse_index}"]')
+                            )
+                            != 0
+                        ):
+                            found = True
                             break
+                    if found:
+                        any_found = True
+                        for i in range(self.in_repeat, index + 1):
+                            self.process_measure(measures[i], verse_index)
+                    else:
+                        if not any_found:
+                            self.result += "(bis)"
+                        break
 
     def process_measure(self, measure, verse):
         "Process a single measure"
