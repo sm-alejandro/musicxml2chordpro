@@ -59,6 +59,13 @@ class XML2Pro:
         for field in identification:
             self.result += f"{{subtitle:{field.text}}}\n"
             self.result += f"{{{field.attrib['type']}:{field.text}}}\n"
+        bpm = self.root.find(".//per-minute")
+        try:
+            bpm = bpm.text
+            self.result += f"{{tempo: {bpm}}}\n"
+            self.result += f"{{comment: ♩={bpm}}}\n"
+        except Exception:
+            pass
 
     def process_part(self, part):
         "Process the voice part"
